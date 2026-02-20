@@ -39,9 +39,14 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
+
+// Enable middleware
+app.UseSwagger();
+app.UseSwaggerUI();
 
 // Apply migrations
 using (var scope = app.Services.CreateScope())
