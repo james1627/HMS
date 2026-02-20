@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace HMS.Models;
@@ -19,5 +21,5 @@ public class Project
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     // Navigation
-    public virtual ICollection<Expense> Expenses { get; set; } = new List<Expense>();
+    public virtual ICollection<Expense> Expenses { get; set; } = [];
 }

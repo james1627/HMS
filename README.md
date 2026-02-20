@@ -1,30 +1,42 @@
 # HMS - House Expense Management System
 
-A .NET 8 Web API for managing house expenses organized by projects.
+A .NET 10 Web API for managing house expenses organized by projects.
 
 ## Features
 
 - User authentication with JWT tokens
 - Project management (CRUD)
 - Expense tracking per project
-- SQLite database
+- PostgreSQL database
 
 ## Getting Started
 
 ### Prerequisites
 
-- .NET 8 SDK
+- .NET 10 SDK
+- Docker and Docker Compose
 - VS Code (optional)
 
 ### Installation
 
+#### Option 1: Run locally
+
 1. Clone the repository
 2. Navigate to `src` directory
 3. Run `dotnet restore`
-4. Run `dotnet ef database update` (if migrations not applied)
-5. Run `dotnet run`
+4. Set up PostgreSQL database (locally or via Docker)
+5. Update `appsettings.json` with your PostgreSQL connection string
+6. Run `dotnet ef database update` (if migrations not applied)
+7. Run `dotnet run`
 
-The API will be available at `https://localhost:5001` (or similar).
+The API will be available at `http://localhost:5280`.
+
+#### Option 2: Run with Docker Compose
+
+1. Clone the repository
+2. Run `docker-compose up --build`
+
+The API will be available at `http://localhost:8080`.
 
 ### API Endpoints
 
@@ -39,7 +51,7 @@ Use the JWT token in Authorization header: `Bearer <token>`
 
 ## Database
 
-Uses SQLite. Database file: `HMS.db` in the src directory.
+Uses PostgreSQL. In Docker setup, it's automatically configured.
 
 ## Configuration
 

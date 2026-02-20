@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HMS.Data;
 using HMS.Models;
+using System.Threading.Tasks;
+using System.Linq;
 
 namespace HMS.Controllers;
 

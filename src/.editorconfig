@@ -1,0 +1,15 @@
+root = true
+
+[*.cs]
+
+# Nullable warnings
+dotnet_diagnostic.CS8602.severity = warning
+
+# Naming rules
+dotnet_diagnostic.IDE1006.severity = warning
+
+# Remove unused usings
+dotnet_diagnostic.IDE0005.severity = error
+
+# Prefer var
+csharp_style_var_for_built_in_types = true:warning
