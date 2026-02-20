@@ -1,6 +1,6 @@
 # HMS - House Expense Management System
 
-A .NET 10 Web API for managing house expenses organized by projects.
+A full-stack application with .NET 10 Web API backend and Blazor WebAssembly frontend for managing house expenses organized by projects.
 
 ## Features
 
@@ -8,6 +8,7 @@ A .NET 10 Web API for managing house expenses organized by projects.
 - Project management (CRUD)
 - Expense tracking per project
 - PostgreSQL database
+- Blazor WebAssembly frontend
 
 ## Getting Started
 
@@ -22,21 +23,21 @@ A .NET 10 Web API for managing house expenses organized by projects.
 #### Option 1: Run locally
 
 1. Clone the repository
-2. Navigate to `src` directory
-3. Run `dotnet restore`
-4. Set up PostgreSQL database (locally or via Docker)
-5. Update `appsettings.json` with your PostgreSQL connection string
-6. Run `dotnet ef database update` (if migrations not applied)
-7. Run `dotnet run`
+2. Run `dotnet restore`
+3. Set up PostgreSQL database (locally or via Docker)
+4. Update `src/appsettings.json` with your PostgreSQL connection string
+5. Run `dotnet build`
+6. Run the API: `cd src && dotnet run`
+7. Run the client: `cd Client && dotnet run`
 
-The API will be available at `http://localhost:5280`.
+The API will be available at `http://localhost:5280`, client at `http://localhost:5000`.
 
 #### Option 2: Run with Docker Compose
 
 1. Clone the repository
 2. Run `docker-compose up --build`
 
-The API will be available at `http://localhost:8080`.
+The application will be available at `http://localhost:8080` (API and frontend served together).
 
 ### API Endpoints
 
@@ -55,4 +56,4 @@ Uses PostgreSQL. In Docker setup, it's automatically configured.
 
 ## Configuration
 
-JWT settings in `appsettings.json`.
+JWT settings in `src/appsettings.json`.

@@ -2,20 +2,23 @@
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
-# Copy the project file and restore dependencies
-COPY src/*.csproj ./
+# Copy the src directory
+COPY src/ ./
 RUN dotnet restore
 
-# Copy the rest of the source code
-COPY src/ ./
+# Build the client
+WORKDIR /src/HMS.Web
+RUN dotnet publish -c Release -o /app/client
 
-# Build the application
+# Build the API
+WORKDIR /src/HMS.Api
 RUN dotnet publish -c Release -o /app/publish
 
 # Use the official .NET 10.0 runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
 WORKDIR /app
 COPY --from=build /app/publish .
+COPY --from=build /app/client/wwwroot ./wwwroot
 
 # Set the URL to listen on all interfaces
 ENV ASPNETCORE_URLS=http://+:8080
@@ -24,4 +27,4 @@ ENV ASPNETCORE_URLS=http://+:8080
 EXPOSE 8080
 
 # Set the entry point
-ENTRYPOINT ["dotnet", "HMS.dll"]
+ENTRYPOINT ["dotnet", "HMS.Api.dll"]
