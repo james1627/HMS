@@ -1,0 +1,60 @@
+@page "/projects"
+@rendermode InteractiveAuto
+
+<PageTitle>Projects</PageTitle>
+
+<h1>Projects</h1>
+
+@if (!isAuthenticated)
+{
+    <p>Redirecting to login...</p>
+}
+else if (projects == null)
+{
+    <p>Loading...</p>
+}
+else if (projects.Count == 0)
+{
+    <p>No projects found.</p>
+}
+else
+{
+    <ul>
+        @foreach (var project in projects)
+        {
+            <li>@project.Name (@project.Description)</li>
+        }
+    </ul>
+}
+
+@code {
+    private List<Project>? projects;
+    private bool isAuthenticated = false;
+
+    [Inject]
+    private IJSRuntime JS { get; set; } = default!;
+    [Inject]
+    private NavigationManager Navigation { get; set; } = default!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var token = await JS.InvokeAsync<string>("localStorage.getItem", "authToken");
+        isAuthenticated = !string.IsNullOrEmpty(token);
+        if (!isAuthenticated)
+        {
+            Navigation.NavigateTo("/login", true);
+            return;
+        }
+        // TODO: Replace with actual API call
+        projects = new List<Project>
+        {
+            new Project { Name = "Sample Project", Description = "Demo description" }
+        };
+    }
+
+    public class Project
+    {
+        public string Name { get; set; } = "";
+        public string Description { get; set; } = "";
+    }
+}

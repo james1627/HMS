@@ -1,0 +1,17 @@
+# Use the base build image
+FROM hms-base:latest AS build
+WORKDIR /src
+
+# Copy full source code
+COPY src/ ./
+
+# Publish only the Api project
+RUN dotnet publish HMS.Api/HMS.Api.csproj -c Release -o /app/publish
+
+# Runtime image
+FROM mcr.microsoft.com/dotnet/aspnet:10.0
+WORKDIR /app
+COPY --from=build /app/publish .
+
+EXPOSE 5000
+ENTRYPOINT ["dotnet", "HMS.Api.dll"]

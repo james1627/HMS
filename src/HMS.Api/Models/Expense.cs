@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace HMS.Models;
+namespace HMS.Api.Models;
 
 public class Expense
 {

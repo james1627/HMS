@@ -1,0 +1,22 @@
+# Base build image
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS base-build
+WORKDIR /src
+
+# 1️⃣ Copy solution and all csproj files for restore
+COPY src/HMS.sln .
+COPY src/**/*.csproj ./csproj-temp/
+
+RUN for file in ./csproj-temp/*.csproj; do \
+        project_name=$(basename "$file" .csproj); \
+        mkdir -p "./$project_name"; \
+        mv "$file" "./$project_name/"; \
+        echo "Moved $file → ./$project_name/"; \
+    done
+
+RUN rm -rf ./csproj-temp
+
+RUN ls -Rla
+
+
+# 2️⃣ Restore all projects
+RUN dotnet restore HMS.sln

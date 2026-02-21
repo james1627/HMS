@@ -1,11 +1,20 @@
 using HMS.Web.Components;
+using HMS.Web.Settings;
+using HMS.Infrastructure.Extensions;
+using Microsoft.AspNetCore.DataProtection;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Get configuration from appsettings.json
+builder.Services.Configure<ApiSettings>(builder.Configuration.GetSection("ApiSettings"));
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
+
+builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.AddHmsDataProtection();
 
 var app = builder.Build();
 

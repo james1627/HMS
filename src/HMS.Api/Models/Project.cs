@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace HMS.Models;
+namespace HMS.Api.Models;
 
 public class Project
 {

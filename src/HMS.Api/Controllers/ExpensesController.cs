@@ -2,12 +2,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using HMS.Data;
-using HMS.Models;
+using HMS.Api.Data;
+using HMS.Api.Models;
 using System.Threading.Tasks;
 using System.Linq;
 
-namespace HMS.Controllers;
+namespace HMS.Api.Controllers;
 
 [Authorize]
 [ApiController]

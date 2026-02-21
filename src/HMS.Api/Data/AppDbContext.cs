@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using HMS.Models;
+using HMS.Api.Models;
 
-namespace HMS.Data;
+namespace HMS.Api.Data;
 
 public class AppDbContext : IdentityDbContext
 {

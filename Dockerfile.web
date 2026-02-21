@@ -1,0 +1,17 @@
+# Use the base build image
+FROM hms-base:latest AS build
+WORKDIR /src
+
+# Copy full source code
+COPY src/ ./
+
+# Publish only the Web project
+RUN dotnet publish HMS.Web/HMS.Web.csproj -c Release -o /app/publish
+
+# Runtime image
+FROM mcr.microsoft.com/dotnet/aspnet:10.0
+WORKDIR /app
+COPY --from=build /app/publish .
+
+EXPOSE 8080
+ENTRYPOINT ["dotnet", "HMS.Web.dll"]

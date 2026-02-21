@@ -8,7 +8,7 @@ using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
 using System;
 
-namespace HMS.Controllers;
+namespace HMS.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
