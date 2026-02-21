@@ -14,9 +14,9 @@ public class AuthService
         await _api.PostAsync("api/auth/register", model);
     }
 
-    public async Task<string> LoginAsync(string username, string password)
+    public async Task<string> LoginAsync(string email, string password)
     {
-        var model = new { Username = username, Password = password };
+        var model = new { Email = email, Password = password };
         var response = await _api.PostAsync<object, LoginResponse>("api/auth/login", model);
         return response?.Token ?? "";
     }
