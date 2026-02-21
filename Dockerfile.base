@@ -15,8 +15,5 @@ RUN for file in ./csproj-temp/*.csproj; do \
 
 RUN rm -rf ./csproj-temp
 
-RUN ls -Rla
-
-
 # 2️⃣ Restore all projects
 RUN dotnet restore HMS.sln

@@ -6,7 +6,7 @@ WORKDIR /src
 COPY src/ ./
 
 # Publish only the Web project
-RUN dotnet publish HMS.Web/HMS.Web.csproj -c Release -o /app/publish
+RUN dotnet publish HMS.Web/HMS.Web.csproj -c Debug -o /app/publish
 
 # Runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:10.0
