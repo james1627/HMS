@@ -55,11 +55,6 @@ using (var scope = app.Services.CreateScope())
     db.Database.Migrate();
 }
 
-app.UseHttpsRedirection();
-
-app.UseDefaultFiles();
-app.UseStaticFiles();
-
 app.UseAuthentication();
 app.UseAuthorization();
 

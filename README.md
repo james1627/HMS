@@ -25,19 +25,19 @@ A full-stack application with .NET 10 Web API backend and Blazor WebAssembly fro
 1. Clone the repository
 2. Run `dotnet restore`
 3. Set up PostgreSQL database (locally or via Docker)
-4. Update `src/appsettings.json` with your PostgreSQL connection string
+4. Update `src/HMS.Api/appsettings.json` with your PostgreSQL connection string
 5. Run `dotnet build`
-6. Run the API: `cd src && dotnet run`
-7. Run the client: `cd Client && dotnet run`
+6. Run the API: `cd src/HMS.Api && dotnet run`
+7. Run the client: `cd src/HMS.Web && dotnet run`
 
-The API will be available at `http://localhost:5280`, client at `http://localhost:5000`.
+The API will be available at `http://localhost:8080`, client at `http://localhost:5000`.
 
 #### Option 2: Run with Docker Compose
 
 1. Clone the repository
 2. Run `docker-compose up --build`
 
-The application will be available at `http://localhost:8080` (API and frontend served together).
+The API will be available at `http://localhost:8080`, and the frontend at `http://localhost:3000`.
 
 ### API Endpoints
 
