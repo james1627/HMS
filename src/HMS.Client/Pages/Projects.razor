@@ -1,6 +1,8 @@
 @page "/projects"
 @rendermode InteractiveAuto
 
+@attribute [Authorize]
+
 <PageTitle>Projects</PageTitle>
 
 <h1>Projects</h1>
@@ -36,9 +38,13 @@ else
     [Inject]
     private NavigationManager Navigation { get; set; } = default!;
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         var token = await JS.InvokeAsync<string>("localStorage.getItem", "authToken");
+        if (string.IsNullOrEmpty(token))
+        {
+            Navigation.NavigateTo("/login", true);
+        }
         isAuthenticated = !string.IsNullOrEmpty(token);
         if (!isAuthenticated)
         {
