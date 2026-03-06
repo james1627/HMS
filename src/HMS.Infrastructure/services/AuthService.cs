@@ -18,7 +18,25 @@ public class AuthService
     {
         var model = new { Email = email, Password = password };
         var response = await _api.PostAsync<object, LoginResponse>("api/auth/login", model);
-        return response?.Token ?? "";
+        if (string.IsNullOrEmpty(response?.Token))
+        {
+            throw new Exception("Login failed: Invalid token returned.");
+        }
+
+        _api.SetBearerTokenAsync(response.Token);
+
+        return response.Token;
+    }
+
+    public async Task LoginWithTokenAsync(string token)
+    {
+        // Optionally, you could validate the token here before setting it
+        _api.SetBearerTokenAsync(token);
+    }
+
+    public void Logout()
+    {
+        _api.SetBearerTokenAsync(string.Empty);
     }
 }
 

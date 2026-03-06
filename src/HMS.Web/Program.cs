@@ -2,8 +2,11 @@ using HMS.Web.Components;
 using HMS.Web.Settings;
 using HMS.Infrastructure.Extensions;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Logging.AddConsole();
 
 // Get configuration from appsettings.json
 builder.Services.Configure<ApiSettings>(builder.Configuration.GetSection("ApiSettings"));
@@ -23,20 +26,23 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
     options.KnownProxies.Clear();
 });
 
-builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddHmsDataProtection();
 
 builder.Services
     .AddAuthentication("Cookies") // 👈 sets DefaultScheme + DefaultChallengeScheme
-    .AddCookie("Cookies", options =>
+    .AddCookie(options =>
     {
-        options.LoginPath = "/login";          // where to redirect
-        options.AccessDeniedPath = "/denied";  // optional
+        options.LoginPath = "/login";
+        options.AccessDeniedPath = "/access-denied";
+        options.Cookie.SameSite = SameSiteMode.Lax;
+        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
     });
 
 builder.Services.AddAuthorization();
 builder.Services.AddCascadingAuthenticationState();
+builder.Services.AddControllers();
 
+builder.Services.AddInfrastructureServices(builder.Configuration);
 
 var app = builder.Build();
 
@@ -65,8 +71,9 @@ app.UseAuthorization();
 
 app.MapStaticAssets();
 app.MapRazorComponents<App>()
-    .AddInteractiveServerRenderMode()
     .AddInteractiveWebAssemblyRenderMode()
     .AddAdditionalAssemblies(typeof(HMS.Client._Imports).Assembly);
+
+app.MapControllers();
 
 app.Run();

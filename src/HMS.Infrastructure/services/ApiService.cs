@@ -29,4 +29,9 @@ public class ApiService
         var response = await _http.PostAsJsonAsync(url, data);
         response.EnsureSuccessStatusCode();
     }
+
+    public void SetBearerTokenAsync(string token)
+    {
+        _http.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+    }
 }

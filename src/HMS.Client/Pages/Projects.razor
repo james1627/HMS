@@ -7,11 +7,7 @@
 
 <h1>Projects</h1>
 
-@if (!isAuthenticated)
-{
-    <p>Redirecting to login...</p>
-}
-else if (projects == null)
+@if (projects == null)
 {
     <p>Loading...</p>
 }
@@ -44,12 +40,6 @@ else
         if (string.IsNullOrEmpty(token))
         {
             Navigation.NavigateTo("/login", true);
-        }
-        isAuthenticated = !string.IsNullOrEmpty(token);
-        if (!isAuthenticated)
-        {
-            Navigation.NavigateTo("/login", true);
-            return;
         }
         // TODO: Replace with actual API call
         projects = new List<Project>
