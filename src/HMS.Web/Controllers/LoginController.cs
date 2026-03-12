@@ -33,8 +33,11 @@ namespace HMS.Web.Controllers
             }
 
             var token = await _authService.LoginAsync(email, password);
+
             if (token == null)
-                return Unauthorized();
+            {
+                return LocalRedirect("/login?error=invalid");
+            }
 
             var claims = new List<Claim>
             {
@@ -48,7 +51,7 @@ namespace HMS.Web.Controllers
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal,
                 new AuthenticationProperties { IsPersistent = true, ExpiresUtc = DateTimeOffset.UtcNow.AddHours(1) });
 
-            return Ok(new { Token = token });
+            return LocalRedirect("/");
         }
 
         [HttpPost("logout")]

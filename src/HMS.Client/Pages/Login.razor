@@ -1,9 +1,30 @@
 @page "/login"
+@inject NavigationManager Nav
 
 <h3>Login</h3>
+
+@if (LoginFailed)
+{
+    <p style="color:red;">Invalid email or password.</p>
+}
 
 <form method="post" action="/api/auth/login">
     <input name="email" placeholder="Email" />
     <input name="password" type="password" placeholder="Password" />
     <button type="submit">Login</button>
 </form>
+
+@code {
+    bool LoginFailed;
+
+    protected override void OnInitialized()
+    {
+        var uri = new Uri(Nav.Uri);
+        var query = Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(uri.Query);
+
+        if (query.ContainsKey("error"))
+        {
+            LoginFailed = true;
+        }
+    }
+}

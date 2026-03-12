@@ -14,18 +14,30 @@ public class AuthService
         await _api.PostAsync("api/auth/register", model);
     }
 
-    public async Task<string> LoginAsync(string email, string password)
+    public async Task<string?> LoginAsync(string email, string password)
     {
         var model = new { Email = email, Password = password };
-        var response = await _api.PostAsync<object, LoginResponse>("api/auth/login", model);
-        if (string.IsNullOrEmpty(response?.Token))
+        try
         {
-            throw new Exception("Login failed: Invalid token returned.");
+            var response = await _api.PostAsync<object, LoginResponse>("api/auth/login", model);
+            if (string.IsNullOrEmpty(response?.Token))
+            {
+                throw new Exception("Login failed: Invalid token returned.");
+            }
+
+            _api.SetBearerTokenAsync(response.Token);
+
+            return response.Token;
         }
-
-        _api.SetBearerTokenAsync(response.Token);
-
-        return response.Token;
+        catch (Exception ex)
+        {
+            if (ex.Message.Contains("Unauthorized"))
+            {
+                return null;
+            }
+            // Log the exception or handle it as needed
+            throw new Exception($"Login failed: {ex.Message}");
+        }
     }
 
     public async Task LoginWithTokenAsync(string token)

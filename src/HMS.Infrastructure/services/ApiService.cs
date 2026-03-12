@@ -1,3 +1,4 @@
+using System.Net;
 using System.Net.Http.Json;
 
 namespace HMS.Infrastructure.Services;
@@ -20,6 +21,10 @@ public class ApiService
     public async Task<TResponse?> PostAsync<TRequest, TResponse>(string url, TRequest data)
     {
         var response = await _http.PostAsJsonAsync(url, data);
+        if (response.StatusCode == HttpStatusCode.Unauthorized)
+        {
+            throw new Exception("Unauthorized"); // or throw an exception if you prefer
+        }
         response.EnsureSuccessStatusCode();
         return await response.Content.ReadFromJsonAsync<TResponse>();
     }
